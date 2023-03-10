@@ -3,7 +3,7 @@ const fs = require("fs");
 const beformMem = process.memoryUsage().rss;
 fs.readFile("./file.txt", (_, data) => {
   fs.writeFile("./file2.txt", data, () => {});
-  // mem calc
+  // calculate
   const afterMem = process.memoryUsage().rss;
   const diff = afterMem - beformMem;
   const consumed = diff / 1024 / 1024;
