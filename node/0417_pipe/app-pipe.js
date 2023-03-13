@@ -14,8 +14,11 @@ piping.on("finish", () => {
 // 예시
 const http = require("http");
 const server = http.createServer((req, res) => {
-  fs.readFile("file.txt", (err, data) => {
-    res.end(data);
-  });
+  // fs.readFile("file.txt", (err, data) => {
+  //   res.end(data);
+  // });
+
+  const stream  = fs.createReadStream('./file.txt')
+  stream.pipe(res)
 });
 server.listen(3000);
