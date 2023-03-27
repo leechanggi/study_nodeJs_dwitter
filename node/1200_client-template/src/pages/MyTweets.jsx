@@ -4,9 +4,7 @@ import Tweets from '../components/Tweets';
 
 const MyTweets = ({ tweetService }) => {
   const { username } = useParams();
-  return (
-    <Tweets tweetService={tweetService} username={username} addable={false} />
-  );
+  return <Tweets tweetService={tweetService} username={username} addable={false} />;
 };
 
 export default MyTweets;

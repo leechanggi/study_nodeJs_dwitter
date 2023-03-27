@@ -11,9 +11,7 @@ export default class TweetService {
   ];
 
   async getTweets(username) {
-    return username
-      ? this.tweets.filter((tweet) => tweet.username === username)
-      : this.tweets;
+    return username ? this.tweets.filter(tweet => tweet.username === username) : this.tweets;
   }
 
   async postTweet(text) {
@@ -29,11 +27,11 @@ export default class TweetService {
   }
 
   async deleteTweet(tweetId) {
-    this.tweets = this.tweets.filter((tweet) => tweet.id !== tweetId);
+    this.tweets = this.tweets.filter(tweet => tweet.id !== tweetId);
   }
 
   async updateTweet(tweetId, text) {
-    const tweet = this.tweets.find((tweet) => tweet.id === tweetId);
+    const tweet = this.tweets.find(tweet => tweet.id === tweetId);
     if (!tweet) {
       throw new Error('tweet not found!');
     }

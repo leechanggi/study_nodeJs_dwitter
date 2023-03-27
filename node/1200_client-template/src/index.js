@@ -16,10 +16,7 @@ const tweetService = new TweetService(baseURL);
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider
-        authService={authService}
-        authErrorEventBus={authErrorEventBus}
-      >
+      <AuthProvider authService={authService} authErrorEventBus={authErrorEventBus}>
         <App tweetService={tweetService} />
       </AuthProvider>
     </BrowserRouter>

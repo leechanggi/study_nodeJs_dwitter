@@ -11,7 +11,7 @@ const Login = ({ onSignUp, onLogin }) => {
   const [text, setText] = useState('');
   const [isAlert, setIsAlert] = useState(false);
 
-  const onSubmit = (event) => {
+  const onSubmit = event => {
     event.preventDefault();
     if (signup) {
       onSignUp(username, password, name, email, url).catch(setError);
@@ -20,12 +20,12 @@ const Login = ({ onSignUp, onLogin }) => {
     }
   };
 
-  const setError = (error) => {
+  const setError = error => {
     setText(error.toString());
     setIsAlert(true);
   };
 
-  const onChange = (event) => {
+  const onChange = event => {
     const {
       target: { name, value, checked },
     } = event;
@@ -49,67 +49,61 @@ const Login = ({ onSignUp, onLogin }) => {
   return (
     <>
       <Banner text={text} isAlert={isAlert} />
-      <form className='auth-form' onSubmit={onSubmit}>
+      <form className="auth-form" onSubmit={onSubmit}>
         <input
-          name='username'
-          type='text'
-          placeholder='Id'
+          name="username"
+          type="text"
+          placeholder="Id"
           value={username}
           onChange={onChange}
-          className='form-input'
+          className="form-input"
           required
         />
         <input
-          name='password'
-          type='password'
-          placeholder='Password'
+          name="password"
+          type="password"
+          placeholder="Password"
           value={password}
-          className='form-input'
+          className="form-input"
           onChange={onChange}
         />
         {signup && (
           <input
-            name='name'
-            type='text'
-            placeholder='Name'
+            name="name"
+            type="text"
+            placeholder="Name"
             value={name}
             onChange={onChange}
-            className='form-input'
+            className="form-input"
             required
           />
         )}
         {signup && (
           <input
-            name='email'
-            type='email'
-            placeholder='Email'
+            name="email"
+            type="email"
+            placeholder="Email"
             value={email}
             onChange={onChange}
-            className='form-input'
+            className="form-input"
             required
           />
         )}
         {signup && (
           <input
-            name='url'
-            type='url'
-            placeholder='Profile Image URL'
+            name="url"
+            type="url"
+            placeholder="Profile Image URL"
             value={url}
             onChange={onChange}
-            className='form-input'
+            className="form-input"
           />
         )}
-        <div className='form-signup'>
-          <input
-            name='signup'
-            id='signup'
-            type='checkbox'
-            onChange={onChange}
-            checked={signup}
-          />
-          <label htmlFor='signup'> Create a new account?</label>
+        <div className="form-signup">
+          <input name="signup" id="signup" type="checkbox" onChange={onChange} checked={signup} />
+          <label htmlFor="signup"> Create a new account?</label>
         </div>
-        <button className='form-btn auth-form-btn' type='submit'>
+        <button className="form-btn auth-form-btn" type="submit">
           {signup ? 'Sign Up' : 'Sign In'}
         </button>
       </form>
