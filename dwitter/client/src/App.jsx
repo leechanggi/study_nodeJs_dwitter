@@ -1,15 +1,15 @@
-import { Switch, Route, useHistory } from 'react-router-dom';
-import Header from './components/Header';
-import AllTweets from './pages/AllTweets';
-import MyTweets from './pages/MyTweets';
-import { useAuth } from './context/AuthContext';
+import { Switch, Route, useHistory } from "react-router-dom";
+import Header from "./components/Header";
+import AllTweets from "./pages/AllTweets";
+import MyTweets from "./pages/MyTweets";
+import { useAuth } from "./context/AuthContext";
 
 function App({ tweetService }) {
   const history = useHistory();
   const { user, logout } = useAuth();
 
   const onAllTweets = () => {
-    history.push('/');
+    history.push("/");
   };
 
   const onMyTweets = () => {
@@ -17,9 +17,9 @@ function App({ tweetService }) {
   };
 
   const onLogout = () => {
-    if (window.confirm('Do you want to log out?')) {
+    if (window.confirm("Do you want to log out?")) {
       logout();
-      history.push('/');
+      history.push("/");
     }
   };
 
