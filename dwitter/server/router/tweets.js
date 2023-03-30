@@ -14,14 +14,14 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res) => {
   const { text, name, username } = req.body;
-  const tweet = {
-    id: Date.now().toString(),
-    text,
-    createdAt: new Date(),
-    name,
-    username,
-  };
-  tweets = [tweet, ...tweets];
+  // const tweet = {
+  //   id: Date.now().toString(),
+  //   text,
+  //   createdAt: new Date(),
+  //   name,
+  //   username,
+  // };
+  // tweets = [tweet, ...tweets];
   res.status(201).json(tweet);
 });
 
