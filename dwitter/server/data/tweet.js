@@ -1,19 +1,19 @@
 let tweets = [
   {
     id: 2,
-    text: 'TEST',
+    text: "테스트",
     createdAt: Date.now(),
-    name: 'testmen',
-    username: 'testmen',
-    url: '',
+    name: "사용자2",
+    username: "user2",
+    url: "",
   },
   {
     id: 1,
-    text: 'TEST',
+    text: "테스트",
     createdAt: Date.now(),
-    name: 'testmen',
-    username: 'testmen2',
-    url: '',
+    name: "사용자1",
+    username: "user1",
+    url: "",
   },
 ];
 
@@ -22,11 +22,11 @@ export async function getAll() {
 }
 
 export async function getAllByUsername(username) {
-  return tweets.filter(tweet => tweet.username.toString() === username);
+  return tweets.filter((tweet) => tweet.username.toString() === username);
 }
 
 export async function getById(id) {
-  return tweets.find(tweet => tweet.id.toString() === id);
+  return tweets.find((tweet) => tweet.id.toString() === id);
 }
 
 export async function create(text, name, username) {
@@ -42,7 +42,7 @@ export async function create(text, name, username) {
 }
 
 export async function update(id, text) {
-  const tweet = tweets.find(tweet => tweet.id === id);
+  const tweet = tweets.find((tweet) => tweet.id === id);
   if (tweet) {
     tweet.text = text;
   }
@@ -50,5 +50,5 @@ export async function update(id, text) {
 }
 
 export async function remove(id) {
-  tweets = tweets.filter(t => t.id.toString() !== id);
+  tweets = tweets.filter((t) => t.id.toString() !== id);
 }
