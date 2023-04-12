@@ -1,9 +1,5 @@
-import bcrypt from "bcrypt";
-// import jwt from "jsonwebtoken";
-
-// const accessToken = process.env.ACCESS_TOKEN_SECRET;
-// const refreshToken = process.env.REFRESH_TOKEN_SECRET;
-let auths = [
+import bcrypt from 'bcrypt';
+let users = [
   // {
   //   id: string,
   //   username: string,
@@ -14,28 +10,25 @@ let auths = [
   // }
 ];
 
-export async function getByUsername(username) {
-  const auth = await auths.find(
-    (auth) => auth.username.toString() === username
-  );
+export async function findByUsername(username) {
+  const auth = await users.find(auth => auth.username.toString() === username);
   return auth;
 }
 
-export async function create(username, password, name, email, url) {
-  const hashed = bcrypt.hashSync(password, 10);
-  const auth = {
+export async function create({ username, password, name, email, url }) {
+  const user = {
     id: Date.now().toString(),
     username,
-    password: hashed,
+    password,
     name,
     email,
     url,
   };
-  auths = [auth, ...auths];
-  return auth;
+  users = [user, ...users];
+  return user;
 }
 
-export async function compare(auth, password) {
+export async function compare(password, auth) {
   const result = bcrypt.compareSync(password, auth.password);
   return result;
 }
