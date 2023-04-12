@@ -6,6 +6,7 @@ import helmet from "helmet";
 import "express-async-errors";
 
 import tweetsRouter from "./router/tweets.js";
+import authRouter from "./router/auth.js";
 
 const app = express();
 const port = 8080;
@@ -35,6 +36,7 @@ app.use(express.static("public", options));
 
 // API router
 app.use("/tweets", tweetsRouter);
+app.use("/auth", authRouter);
 
 app.use((req, res, next) => {
   res.sendStatus(404);
