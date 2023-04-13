@@ -1,18 +1,20 @@
-import bcrypt from 'bcrypt';
 let users = [
   // {
-  //   id: string,
-  //   username: string,
-  //   password: string,
-  //   name: string,
-  //   email: string,
-  //   url: string?
-  // }
+  //   id: "123456",
+  //   username: "abcdef",
+  //   password: "abcd1234",
+  //   name: "이창기",
+  //   email: "lxyex1379@naver.com",
+  //   url: "",
+  // },
 ];
 
 export async function findByUsername(username) {
-  const auth = await users.find(auth => auth.username.toString() === username);
-  return auth;
+  return users.find((user) => user.username === username);
+}
+
+export async function findById(id) {
+  return users.find((user) => user.id === id);
 }
 
 export async function create({ username, password, name, email, url }) {
@@ -26,9 +28,4 @@ export async function create({ username, password, name, email, url }) {
   };
   users = [user, ...users];
   return user;
-}
-
-export async function compare(password, auth) {
-  const result = bcrypt.compareSync(password, auth.password);
-  return result;
 }
