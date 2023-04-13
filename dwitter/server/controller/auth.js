@@ -34,14 +34,12 @@ export async function login(req, res) {
       .status(401)
       .json({ message: "아이디 혹은 비밀번호가 잘못되었습니다." });
   }
-
   const isValidPassword = bcrypt.compareSync(password, user.password);
   if (!isValidPassword) {
     return res
       .status(401)
       .json({ message: "아이디 혹은 비밀번호가 잘못되었습니다." });
   }
-
   const token = createJwtToken(user.id);
   res.status(200).json({ token, username });
 }
@@ -50,8 +48,6 @@ export async function me(req, res) {
   const user = await userRep.findById(req.userId);
   if (!user) {
     return res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
-  } else {
-    console.log(req.token);
   }
   res.status(200).json({ token: req.token, username: user.username });
 }
