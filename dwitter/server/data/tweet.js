@@ -1,24 +1,27 @@
+import * as userRep from "./auth.js";
+
 let tweets = [
   {
-    id: 2,
+    id: 1,
+    userId: "lcg0425",
     text: "테스트",
-    createdAt: Date.now(),
-    name: "사용자2",
-    username: "user2",
-    url: "",
+    createdAt: Date.now().toString(),
   },
   {
-    id: 1,
+    id: 2,
+    userId: "lcg0425",
     text: "테스트",
-    createdAt: Date.now(),
-    name: "사용자1",
-    username: "user1",
-    url: "",
+    createdAt: Date.now().toString(),
   },
 ];
 
 export async function getAll() {
-  return tweets;
+  return Promise.all(
+    tweets.map(async (tweet) => {
+      const { name, username, url } = await userRep.findById(tweet.userId);
+      return { ...tweet, name, username, url };
+    })
+  );
 }
 
 export async function getAllByUsername(username) {
