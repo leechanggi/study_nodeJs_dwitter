@@ -21,7 +21,7 @@ export const isAuth = async (req, res, next) => {
       if (!user) {
         return res.status(401).json(AUTH_ERROR);
       }
-      req.userId = user.id;
+      req.userId = user.id; // req.customData
       next();
     }
   );

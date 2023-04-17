@@ -1,20 +1,21 @@
 let users = [
   // {
-  //   id: "123456",
-  //   username: "abcdef",
-  //   password: "abcd1234",
-  //   name: "이창기",
-  //   email: "lxyex1379@naver.com",
-  //   url: "",
+  //   id: '1',
+  //   username: 'lcg0425',
+  //   password:
+  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE2ODE3MzY3NTU4NjIiLCJpYXQiOjE2ODE3MzY3NzAsImV4cCI6MTY4MTkwOTU3MH0.PXHuL0Y_bf8oFafBbmDWmE0nLHKvsTPaEBzAAygkcww',
+  //   name: '이창기',
+  //   email: 'lxyex1379@naver.com',
+  //   url: '',
   // },
 ];
 
 export async function findByUsername(username) {
-  return users.find((user) => user.username === username);
+  return users.find(user => user.username === username);
 }
 
 export async function findById(id) {
-  return users.find((user) => user.id === id);
+  return users.find(user => user.id === id);
 }
 
 export async function create({ username, password, name, email, url }) {
