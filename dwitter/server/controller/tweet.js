@@ -1,4 +1,4 @@
-import * as tweetRep from "../data/tweet.js";
+import * as tweetRep from '../data/tweet.js';
 
 export async function getTweets(req, res, next) {
   const username = req.query.username;
@@ -27,12 +27,15 @@ export async function getTweet(req, res) {
 export async function updateTweet(req, res) {
   const id = req.params.id;
   const text = req.body.text;
-  const tweet = await tweetRep.update(id, text);
-  if (tweet) {
-    res.status(200).json(tweet);
-  } else {
-    res.status(404).json({ message: `해당 게시글을 찾을수 없습니다.(:${id})` });
+  const tweet = await tweetRep.getById(id);
+  if (!tweet) {
+    return res.sendStatus(404);
   }
+  if (tweet.userId !== req.userId) {
+    return res.sendStatus(403);
+  }
+  const updated = await tweetRep.update(id, text);
+  res.status(200).json(updated);
 }
 
 export async function deleteTweet(req, res) {
