@@ -1,4 +1,4 @@
-import * as userRep from './auth.js';
+import * as userRep from "./auth.js";
 
 let tweets = [
   // {
@@ -17,7 +17,7 @@ let tweets = [
 
 export async function getAll() {
   return Promise.all(
-    tweets.map(async tweet => {
+    tweets.map(async (tweet) => {
       const { username, name, url } = await userRep.findById(tweet.userId);
       return { ...tweet, username, name, url };
     })
@@ -25,15 +25,13 @@ export async function getAll() {
 }
 
 export async function getAllByUsername(username) {
-  return getAll().then(tweets =>
-    tweets.filter(tweet => {
-      tweet.username === username;
-    })
+  return getAll().then((tweets) =>
+    tweets.filter((tweet) => tweet.username.toString() === username)
   );
 }
 
 export async function getById(id) {
-  const found = tweets.find(tweet => tweet === id);
+  const found = tweets.find((tweet) => tweet.id.toString() === id);
   if (!found) {
     return null;
   }
@@ -43,17 +41,18 @@ export async function getById(id) {
 
 export async function create(text, userId) {
   const tweet = {
-    id: new Date().toString(),
+    id: Date.now().toString(),
     text,
     createdAt: new Date(),
     userId,
   };
   tweets = [tweet, ...tweets];
+  console.log(tweets);
   return getById(tweet.id);
 }
 
 export async function update(id, text) {
-  const tweet = tweets.find(tweet => tweet.id === id);
+  const tweet = tweets.find((tweet) => tweet.id.toString() === id);
   if (tweet) {
     tweet.text = text;
   }
@@ -61,5 +60,5 @@ export async function update(id, text) {
 }
 
 export async function remove(id) {
-  tweets = tweets.filter(tweet => tweet.id.toString() !== id);
+  tweets = tweets.filter((tweet) => tweet.id.toString() !== id);
 }
