@@ -1,4 +1,4 @@
-import * as dotenv from "dotenv";
+import { config } from "./config.js";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -10,8 +10,8 @@ import tweetsRouter from "./router/tweets.js";
 import authRouter from "./router/auth.js";
 
 const app = express();
-const DEV_SEVER_PORT = 8080;
-const DEV_CLIENT_PORT = 3000;
+const hostServer = config.host.server;
+const hostClient = config.host.client;
 const options = {
   dotfiles: "ignore",
   etag: false,
@@ -23,12 +23,11 @@ const options = {
   },
 };
 const corsOptions = {
-  origin: [`http://localhost:${DEV_CLIENT_PORT}`],
+  origin: [`http://localhost:${hostClient}`],
   optionsSuccessStatus: 200,
   credentials: true,
 };
 
-dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("tiny"));
@@ -50,8 +49,8 @@ app.use((err, req, res, next) => {
   res.sendStatus(500);
 });
 
-app.listen(DEV_SEVER_PORT, () => {
+app.listen(hostServer, () => {
   console.log(
-    `-------------------------------\nlistening http://localhost:${DEV_SEVER_PORT}\n-------------------------------`
+    `-------------------------------\nlistening http://localhost:${hostServer}\n-------------------------------`
   );
 });

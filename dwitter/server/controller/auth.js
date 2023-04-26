@@ -1,12 +1,13 @@
+import { config } from "../config.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "express-async-errors";
 
 import * as userRep from "../data/auth.js";
 
-const JWT_SECRET_KEY = "CAsSu&XLWAI#KJCsq+HBLfZfv+(4U2mu";
-const JWT_EXPIRE_DAY = "2d";
-const BCRYPT_SALT = 12;
+const jwtSecretKey = config.jwt.secretKey;
+const jwtExpireSec = config.jwt.expireSec;
+const bcryptSalt = config.bcrypt.salt;
 
 export async function signup(req, res) {
   const { username, password, name, email, url } = req.body;
@@ -14,7 +15,7 @@ export async function signup(req, res) {
   if (foundUsername) {
     return res.status(409).json({ message: "사용할 수 없는 아이디 입니다." });
   }
-  const hashed = bcrypt.hashSync(password, BCRYPT_SALT);
+  const hashed = bcrypt.hashSync(password, bcryptSalt);
   const userId = await userRep.create({
     username,
     password: hashed,
@@ -53,5 +54,5 @@ export async function me(req, res) {
 }
 
 function createJwtToken(id) {
-  return jwt.sign({ id }, JWT_SECRET_KEY, { expiresIn: JWT_EXPIRE_DAY });
+  return jwt.sign({ id }, jwtSecretKey, { expiresIn: jwtExpireSec });
 }
