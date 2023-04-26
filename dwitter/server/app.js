@@ -1,25 +1,27 @@
-import { config } from "./config.js";
-import express from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import morgan from "morgan";
-import helmet from "helmet";
-import "express-async-errors";
+import { config } from './config.js';
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+import helmet from 'helmet';
+import 'express-async-errors';
 
-import tweetsRouter from "./router/tweets.js";
-import authRouter from "./router/auth.js";
+import tweetsRouter from './router/tweets.js';
+import authRouter from './router/auth.js';
+
+import { initSocket } from './connection/socket.js';
 
 const app = express();
 const hostServer = config.host.server;
 const hostClient = config.host.client;
 const options = {
-  dotfiles: "ignore",
+  dotfiles: 'ignore',
   etag: false,
   index: false,
-  maxAge: "1d",
+  maxAge: '1d',
   redirect: false,
   setHeaders: function (res, path, stat) {
-    res.set("x-timestamp", Date.now());
+    res.set('x-timestamp', Date.now());
   },
 };
 const corsOptions = {
@@ -30,15 +32,15 @@ const corsOptions = {
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(morgan("tiny"));
+app.use(morgan('tiny'));
 app.use(helmet());
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static("public", options));
+app.use(express.static('public', options));
 
 // API router
-app.use("/tweets", tweetsRouter);
-app.use("/auth", authRouter);
+app.use('/tweets', tweetsRouter);
+app.use('/auth', authRouter);
 
 app.use((req, res, next) => {
   res.sendStatus(404);
@@ -49,8 +51,5 @@ app.use((err, req, res, next) => {
   res.sendStatus(500);
 });
 
-app.listen(hostServer, () => {
-  console.log(
-    `-------------------------------\nlistening http://localhost:${hostServer}\n-------------------------------`
-  );
-});
+const server = app.listen(hostServer);
+initSocket(server);
