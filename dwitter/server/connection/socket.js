@@ -1,10 +1,10 @@
-import { Server } from 'socket.io';
-import jwt from 'jsonwebtoken';
-import { config } from '../config.js';
+import { Server } from "socket.io";
+import jwt from "jsonwebtoken";
+import { config } from "../config.js";
 
 const hostClient = config.host.client;
 const jwtSecretKey = config.jwt.secretKey;
-const msgAuthError = 'Authentication Error';
+const msgAuthError = "Authentication Error";
 
 class Socket {
   constructor(server) {
@@ -16,7 +16,6 @@ class Socket {
 
     this.io.use((socket, next) => {
       const token = socket.handshake.auth.token;
-      console.log(token);
       if (!token) {
         return next(new Error(msgAuthError));
       }
@@ -28,8 +27,8 @@ class Socket {
       });
     });
 
-    this.io.on('connection', socket => {
-      console.log('Socket client connected');
+    this.io.on("connection", (socket) => {
+      console.log("Socket client connected");
     });
   }
 }
@@ -43,7 +42,7 @@ export function initSocket(server) {
 
 export function getSocketIO() {
   if (!socket) {
-    throw new Error('Please call init first');
+    throw new Error("Please call init first");
   }
   return socket.io;
 }
