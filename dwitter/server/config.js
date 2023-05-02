@@ -24,7 +24,7 @@ export const config = {
   db: {
     host: required('DB_HOST', 'localhost'),
     user: required('DB_USER', 'root'),
-    pw: required('DB_PW'),
+    password: required('DB_PW'),
     port: required('DB_PORT', '3306'),
     database: required('DB_DATABASE', 'dwitter'),
   },
