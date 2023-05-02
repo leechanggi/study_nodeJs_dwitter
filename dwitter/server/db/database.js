@@ -8,7 +8,7 @@ const pool = mysql.createPool({
   port: config.db.port,
   database: config.db.database,
   connectTimeout: 5000,
-  connectionLimit: 30, // default 10
+  connectionLimit: 30,
 });
 
 export const db = pool.promise();
