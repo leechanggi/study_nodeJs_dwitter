@@ -1,32 +1,24 @@
-let users = [
-  // {
-  //   id: "1682564948169",
-  //   username: "lcg0426",
-  //   password: "$2b$12$dgTiwQvj31m09q4.D9r34uYbe38EBGVWnlMtShycFxdCDX0DlfmEy", //12345679
-  //   name: "이창재",
-  //   email: "lcg0425@naver.com",
-  //   url: "",
-  // },
-];
+import { db } from '../db/database.js';
 
 export async function findByUsername(username) {
-  return users.find(user => user.username.toString() === username.toString());
+  return db
+    .execute('SELECT * FROM users WHERE username=?', [username])
+    .then(result => result[0][0]);
 }
 
 export async function findById(id) {
-  return users.find(user => user.id == id);
+  return db.execute('SELECT * FROM users WHERE id=?', [id]).then(result => result[0][0]);
 }
 
-export async function create({ username, password, name, email, url }) {
-  const user = {
-    id: Date.now().toString(),
-    username,
-    password,
-    name,
-    email,
-    url,
-  };
-  users = [user, ...users];
-  console.log(users);
-  return user;
+export async function create(user) {
+  const { username, password, name, email, url } = user;
+  return db
+    .execute('INSERT INTO users (username, password, name, email, url) VALUES (?, ?, ?, ?, ?)', [
+      username,
+      password,
+      name,
+      email,
+      url,
+    ])
+    .then(result => result[0].insertId);
 }

@@ -53,7 +53,7 @@ app.use((err, req, res, next) => {
 });
 
 db.getConnection().then(connection => {
-  console.log(connection);
+  // console.log(connection);
 });
 const server = app.listen(hostServer);
 initSocket(server);
