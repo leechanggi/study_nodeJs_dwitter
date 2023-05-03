@@ -1,9 +1,8 @@
 import SQ from 'sequelize';
 import { sequelize } from '../db/database.js';
-
 const DataTypes = SQ.DataTypes;
 
-const User = sequelize.define(
+export const User = sequelize.define(
   'user',
   {
     id: {
@@ -28,7 +27,7 @@ const User = sequelize.define(
       type: DataTypes.STRING(128),
       allowNull: false,
     },
-    username: {
+    url: {
       type: DataTypes.TEXT,
     },
   },
@@ -40,18 +39,9 @@ export async function findByUsername(username) {
 }
 
 export async function findById(id) {
-  // return sequelize.execute('SELECT * FROM users WHERE id=?', [id]).then(result => result[0][0]);
+  return User.findByPk(id);
 }
 
 export async function create(user) {
-  const { username, password, name, email, url } = user;
-  // return sequelize
-  //   .execute('INSERT INTO users (username, password, name, email, url) VALUES (?, ?, ?, ?, ?)', [
-  //     username,
-  //     password,
-  //     name,
-  //     email,
-  //     url,
-  //   ])
-  //   .then(result => result[0].insertId);
+  return User.create(user).then(data => data.dataValues.id);
 }

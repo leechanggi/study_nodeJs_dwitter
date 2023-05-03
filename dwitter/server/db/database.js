@@ -6,4 +6,5 @@ export const sequelize = new SQ.Sequelize(database, username, password, {
   host,
   port,
   dialect: 'mysql',
+  // logging: false,
 });
