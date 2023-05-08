@@ -1,26 +1,13 @@
-import { getUsers } from '../db/database.js';
-import MongoDB from 'mongodb';
-
-const ObjectId = MongoDB.ObjectId;
+import { UserModel } from "../db/database.js";
 
 export async function findByUsername(username) {
-  return getUsers()
-    .findOne({ username }) //
-    .then(mapOptionalUser);
+  return UserModel.findOne({ username }).exec();
 }
 
 export async function findById(id) {
-  return getUsers()
-    .findOne({ _id: new ObjectId(id) })
-    .then(mapOptionalUser);
+  return UserModel.findById(id).exec();
 }
 
 export async function create(user) {
-  return getUsers()
-    .insertOne(user)
-    .then(data => data.insertedId.toString());
-}
-
-function mapOptionalUser(user) {
-  return user ? { ...user, id: user._id.toString() } : user;
+  return UserModel.create(user);
 }
