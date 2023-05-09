@@ -1,8 +1,15 @@
-import { TweetModel } from "../db/database.js";
+import Mongoose from "mongoose";
+import { useVirtualId } from "../db/database.js";
 import * as userRep from "./auth.js";
-// import MongoDB from "mongodb";
 
-// const ObjectId = MongoDB.ObjectId;
+const tweetSchema = new Mongoose.Schema({
+  text: { type: String, require: true },
+  createAt: { type: Date, default: Date.now },
+});
+
+useVirtualId(tweetSchema);
+
+const Tweet = Mongoose.model("tweet", tweetSchema);
 
 export async function getAll() {
   // return getTweets() //
@@ -27,15 +34,19 @@ export async function getById(id) {
 }
 
 export async function create(text, userId) {
-  // const { username, name, url } = await userRep.findById(userId);
-  // const tweet = {
-  //   text,
-  //   createdAt: new Date(),
-  //   userId,
-  //   username,
-  //   name,
-  //   url,
-  // };
+  const { username, name, url } = await userRep.findById(userId);
+  const tweet = {
+    text,
+    createdAt: new Date(),
+    userId,
+    username,
+    name,
+    url,
+  };
+  return new Tweet(tweet).save().then((data) => {
+    console.log(data);
+    return data;
+  });
   // return getTweets()
   //   .insertOne(tweet)
   //   .then((data) => {

@@ -1,25 +1,19 @@
-// import MongoDB from 'mongodb';
-import mongoose from "mongoose";
+import Mongoose from "mongoose";
 import { config } from "../config.js";
 
-const url = config.db.host;
+const DB_HOST = config.db.host;
 
 export async function connectDB() {
-  return mongoose.connect(url);
+  return Mongoose.connect(DB_HOST, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 }
 
-const userSchema = new mongoose.Schema({
-  username: { type: String, require: true, unique: true },
-  password: { type: String, require: true },
-  name: { type: String, require: true },
-  email: { type: String, require: true },
-  url: { type: String },
-});
-
-const tweetSchema = new mongoose.Schema({
-  text: { type: String, require: true },
-  createAt: { type: Date, default: Date.now },
-});
-
-export const UserModel = mongoose.model("user", userSchema);
-export const TweetModel = mongoose.model("tweet", tweetSchema);
+export function useVirtualId(schema) {
+  schema.virtual("id").get(function () {
+    return this._id.toString();
+  });
+  schema.set("toJSON", { virtuals: true });
+  schema.set("toObject", { virtuals: true });
+}
