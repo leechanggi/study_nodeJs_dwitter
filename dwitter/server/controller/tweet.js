@@ -10,8 +10,8 @@ export async function getTweets(req, res, next) {
 }
 
 export async function createTweets(req, res) {
-  const { text, userId } = req.body;
-  const tweet = await tweetRep.create(text, userId);
+  const { text } = req.body;
+  const tweet = await tweetRep.create(text, req.userId);
   res.status(201).json(tweet);
   getSocketIO().emit('tweets', tweet);
 }
