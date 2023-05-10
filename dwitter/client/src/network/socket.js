@@ -17,6 +17,6 @@ export default class Socker {
     }
 
     this.io.on(event, (message) => callback(message));
-    return () => this.is.off(event);
+    return () => this.io.off(event);
   }
 }
