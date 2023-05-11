@@ -1,16 +1,19 @@
-import { Server } from 'socket.io';
-import jwt from 'jsonwebtoken';
-import { config } from '../config.js';
+import { Server } from "socket.io";
+import jwt from "jsonwebtoken";
+import { config } from "../config.js";
 
 const HOST_CLIENT = config.host.client;
 const JWT_SECRETKEY = config.jwt.secretKey;
-const msgAuthError = 'Authentication Error';
+const CORS_ORIGIN = config.cors.origin;
+
+const msgAuthError = "Authentication Error";
 
 class Socket {
   constructor(server) {
     this.io = new Server(server, {
       cors: {
-        origin: [`http://localhost:${HOST_CLIENT}`],
+        // origin: [`http://localhost:${HOST_CLIENT}`],
+        origin: CORS_ORIGIN,
       },
     });
 
@@ -27,8 +30,8 @@ class Socket {
       });
     });
 
-    this.io.on('connection', socket => {
-      console.log('Socket client connected');
+    this.io.on("connection", (socket) => {
+      console.log("Socket client connected");
     });
   }
 }
@@ -42,7 +45,7 @@ export function initSocket(server) {
 
 export function getSocketIO() {
   if (!socket) {
-    throw new Error('Please call init first');
+    throw new Error("Please call init first");
   }
   return socket.io;
 }

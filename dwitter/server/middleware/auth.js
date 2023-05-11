@@ -1,16 +1,16 @@
-import { config } from '../config.js';
-import jwt from 'jsonwebtoken';
-import * as userRep from '../data/auth.js';
+import { config } from "../config.js";
+import jwt from "jsonwebtoken";
+import * as userRep from "../data/auth.js";
 
 const jwtSecretKey = config.jwt.secretKey;
-const msgAuthError = { message: 'Authentication Error' };
+const msgAuthError = { message: "Authentication Error" };
 
 export async function isAuth(req, res, next) {
-  const authHeader = req.get('Authorization');
-  if (!(authHeader && authHeader.startsWith('Bearer '))) {
+  const authHeader = req.get("Authorization");
+  if (!(authHeader && authHeader.startsWith("Bearer "))) {
     return res.status(401).json(msgAuthError);
   }
-  const token = authHeader.split(' ')[1];
+  const token = authHeader.split(" ")[1];
   jwt.verify(
     token, //
     jwtSecretKey, //
@@ -23,6 +23,7 @@ export async function isAuth(req, res, next) {
         return res.status(401).json(msgAuthError);
       }
       req.userId = user.id;
+      req.token = user.token;
       next();
     }
   );
